@@ -1,0 +1,59 @@
+{
+	"name": "sander-nw/private-repo",
+	"description": "",
+	"type": "project",
+	"license": "proprietary",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:sander-nw/private-package.git"
+		}
+	],
+	"require": {
+		"php": "^8.0",
+		"ext-json": "*",
+		"ext-zend-opcache": "*",
+		"symfony/console": "5.2.*",
+		"symfony/flex": "^1.1",
+		"symfony/framework-bundle": "5.2.*",
+		"symfony/yaml": "5.2.*",
+		"sander-nw/private-package"
+	},
+	"config": {
+		"preferred-install": {
+			"*": "dist"
+		},
+		"sort-packages": true
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"App\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"auto-scripts": {
+			"cache:clear": "symfony-cmd",
+			"assets:install %PUBLIC_DIR%": "symfony-cmd"
+		},
+		"post-install-cmd": [
+			"@auto-scripts"
+		],
+		"post-update-cmd": [
+			"@auto-scripts"
+		]
+	},
+	"conflict": {
+		"symfony/symfony": "*"
+	},
+	"extra": {
+		"symfony": {
+			"allow-contrib": false,
+			"require": "5.2.*"
+		}
+	}
+}

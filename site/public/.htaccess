@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# www redirect to non-www
+	RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+	RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+	# Sets the HTTP_AUTHORIZATION header removed by Apache
+	RewriteCond %{HTTP:Authorization} .
+	RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+	# If the requested filename exists, simply serve it.
+	# We only want to let Apache serve files and not directories.
+	RewriteCond %{REQUEST_FILENAME} -f
+	RewriteRule ^ - [L]
+
+	# Rewrite all other queries to the front controller.
+	RewriteRule ^ %{ENV:BASE}/index.php [L]
+</IfModule>
+
+AddOutputFilterByType DEFLATE application/json
